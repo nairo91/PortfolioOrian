@@ -439,9 +439,8 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Mon Parcours</h2>
           <div className="relative border-l border-slate-800 ml-3 space-y-12">
             {[
-              { year: "2024 - Présent", title: "Développeur Freelance Fullstack", company: "Mirona.Dev", desc: "Développement de solutions web sur mesure pour clients internationaux. Stack: Next.js, Supabase, Stripe." },
-              { year: "2022 - 2024", title: "Lead Frontend Developer", company: "Tech Start-up", desc: "Conception de l'architecture frontend et migration vers React 18. Mentoring d'une équipe de 3 juniors." },
-              { year: "2020 - 2022", title: "Master Ingénierie Web", company: "École Supérieure du Numérique", desc: "Spécialisation en architectures micro-services et sécurité applicative." },
+              { year: "Sept 2025 - Présent", title: "Licence CPI (Concepteur de Projets Informatiques)", company: "Formation en cours", desc: "Conception et développement d'applications complexes. Architecture logicielle et gestion de projet agile." },
+              { year: "Sept 2023 - Juin 2025", title: "BTS SIO Option SLAM", company: "Diplôme Validé", desc: "Solutions Logicielles et Applications Métiers. Développement web, mobile et bases de données. Apprentissage des bonnes pratiques de code." },
             ].map((exp, i) => (
               <div key={i} className="relative pl-8">
                 <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-slate-950"></div>
