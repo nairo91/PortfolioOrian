@@ -5,7 +5,7 @@ import { Reveal } from "./components/Reveal";
 import {
   Terminal, Code, Globe, Trash2, Plus, CheckCircle,
   Github, Linkedin, Mail, Server, Cpu, Layers, Send, Save, Loader2, X,
-  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop
+  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop, LayoutDashboard
 } from 'lucide-react';
 
 // --- TYPES ---
@@ -434,6 +434,49 @@ export default function Home() {
                 </div>
               </div>
             </Reveal>
+
+            {/* Projet 3 : MamaAdmin Dashboard */}
+            <Reveal delay={0.3}>
+              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
+                <div className="h-48 bg-slate-950 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-900 transition relative">
+                  {/* Simulation visuelle miniature du dashboard */}
+                  <div className="absolute inset-0 opacity-30 flex gap-2 p-4">
+                    <div className="w-1/4 h-full bg-slate-800 rounded"></div>
+                    <div className="w-3/4 h-full flex flex-col gap-2">
+                      <div className="h-8 bg-slate-800 rounded w-full"></div>
+                      <div className="flex gap-2 h-20">
+                        <div className="flex-1 bg-slate-800 rounded"></div>
+                        <div className="flex-1 bg-slate-800 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="z-10 bg-slate-900 p-3 rounded-xl border border-slate-700 shadow-xl">
+                    <LayoutDashboard size={32} className="text-emerald-500" />
+                  </div>
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">MamaAdmin Dashboard</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Le Back-Office de gestion pour la pizzeria. Suivi des KPI, graphiques d'activité et gestion des commandes en temps réel.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Dashboard</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Recharts</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Admin</span>
+                  </div>
+                  {/* Note le lien interne vers /mama-admin */}
+                  <a href="/mama-admin" target="_blank" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Tester le Dashboard <ArrowRight size={16} />
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+
+
           </div>
         </div>
       </section>
