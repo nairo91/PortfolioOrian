@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { Reveal } from "./components/Reveal";
 import {
   Terminal, Code, Globe, Trash2, Plus, CheckCircle,
   Github, Linkedin, Mail, Server, Cpu, Layers, Send, Save, Loader2, X,
@@ -291,49 +292,59 @@ export default function Home() {
       <section id="about" className="pt-40 pb-20 px-6 max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              Disponible pour missions Fullstack
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
-              Salut, je suis <br />
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">MIRONA Orian</span>
-            </h1>
-            <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
-              Développeur Fullstack passionné par l'architecture logicielle et l'expérience utilisateur.
-              Je transforme des idées complexes en applications web fluides et performantes.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a href="#realisations" className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-emerald-900/20 flex items-center gap-2">
-                Voir mes projets <Code size={18} />
-              </a>
-              <a href="https://github.com" target="_blank" className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold transition border border-slate-700 flex items-center gap-2">
-                <Github size={18} /> GitHub
-              </a>
-            </div>
+            <Reveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Disponible pour missions Fullstack
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
+                Salut, je suis <br />
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">MIRONA Orian</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
+                Développeur Fullstack passionné par l'architecture logicielle et l'expérience utilisateur.
+                Je transforme des idées complexes en applications web fluides et performantes.
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a href="#realisations" className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-emerald-900/20 flex items-center gap-2">
+                  Voir mes projets <Code size={18} />
+                </a>
+                <a href="https://github.com" target="_blank" className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold transition border border-slate-700 flex items-center gap-2">
+                  <Github size={18} /> GitHub
+                </a>
+              </div>
+            </Reveal>
           </div>
 
           {/* Bloc Visuel "Code" */}
           <div className="flex-1 w-full max-w-md">
-            <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 shadow-2xl rotate-3 hover:rotate-0 transition duration-500">
-              <div className="flex gap-1.5 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <Reveal delay={0.4}>
+              <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 shadow-2xl rotate-3 hover:rotate-0 transition duration-500">
+                <div className="flex gap-1.5 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div className="space-y-2 font-mono text-sm">
+                  <div className="text-slate-400">// Définition du profil</div>
+                  <div className="text-purple-400">const <span className="text-blue-400">developer</span> = <span className="text-yellow-300">{'{'}</span></div>
+                  <div className="pl-4 text-white">name: <span className="text-emerald-400">'MIRONA Orian'</span>,</div>
+                  <div className="pl-4 text-white">role: <span className="text-emerald-400">'Fullstack Engineer'</span>,</div>
+                  <div className="pl-4 text-white">skills: <span className="text-yellow-300">['React', 'Node', 'SQL']</span>,</div>
+                  <div className="pl-4 text-white">hardWorker: <span className="text-orange-400">true</span></div>
+                  <div className="text-yellow-300">{'}'}</div>
+                </div>
               </div>
-              <div className="space-y-2 font-mono text-sm">
-                <div className="text-slate-400">// Définition du profil</div>
-                <div className="text-purple-400">const <span className="text-blue-400">developer</span> = <span className="text-yellow-300">{'{'}</span></div>
-                <div className="pl-4 text-white">name: <span className="text-emerald-400">'MIRONA Orian'</span>,</div>
-                <div className="pl-4 text-white">role: <span className="text-emerald-400">'Fullstack Engineer'</span>,</div>
-                <div className="pl-4 text-white">skills: <span className="text-yellow-300">['React', 'Node', 'SQL']</span>,</div>
-                <div className="pl-4 text-white">hardWorker: <span className="text-orange-400">true</span></div>
-                <div className="text-yellow-300">{'}'}</div>
-              </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -347,13 +358,15 @@ export default function Home() {
               { icon: Server, title: "Backend Robuste", desc: "API REST & GraphQL scalables avec Node.js, Express ou NestJS. Gestion de bases de données PostgreSQL." },
               { icon: Cpu, title: "Architecture & DevOps", desc: "Dockerisation, CI/CD et déploiement cloud (Vercel, AWS). Code propre et maintenable." },
             ].map((item, i) => (
-              <div key={i} className="p-8 bg-slate-950/50 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition hover:-translate-y-1">
-                <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-emerald-500 border border-emerald-500/10">
-                  <item.icon size={24} />
+              <Reveal key={i} delay={i * 0.1}>
+                <div className="p-8 bg-slate-950/50 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-emerald-500 border border-emerald-500/10">
+                    <item.icon size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">{item.desc}</p>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-slate-400 leading-relaxed text-sm">{item.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -369,54 +382,58 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Projet 1 : Mama Pizza */}
-            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-              <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
-                <Globe size={48} className="text-orange-500 opacity-80" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mama Pizza Montlhéry</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                      Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation pour le référencement local.
-                    </p>
+            <Reveal>
+              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
+                <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
+                  <Globe size={48} className="text-orange-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mama Pizza Montlhéry</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation pour le référencement local.
+                      </p>
+                    </div>
                   </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">UX/UI</span>
+                  </div>
+                  <a href="https://mamapizza-montlhery.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Voir le site <ExternalLink size={16} />
+                  </a>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">UX/UI</span>
-                </div>
-                <a href="https://mamapizza-montlhery.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                  Voir le site <ExternalLink size={16} />
-                </a>
               </div>
-            </div>
+            </Reveal>
 
             {/* Projet 2 : Autre projet */}
-            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-              <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
-                <Layers size={48} className="text-blue-500 opacity-80" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Web & Dashboard</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                      Prototype d'application web moderne démontrant l'intégration de composants dynamiques et une gestion d'état avancée.
-                    </p>
+            <Reveal delay={0.2}>
+              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
+                <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
+                  <Layers size={48} className="text-blue-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Web & Dashboard</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Prototype d'application web moderne démontrant l'intégration de composants dynamiques et une gestion d'état avancée.
+                      </p>
+                    </div>
                   </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Next.js</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">TypeScript</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
+                  </div>
+                  <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Voir l'application <ExternalLink size={16} />
+                  </a>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Next.js</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">TypeScript</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
-                </div>
-                <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                  Voir l'application <ExternalLink size={16} />
-                </a>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -442,13 +459,15 @@ export default function Home() {
               { year: "Sept 2025 - Présent", title: "Licence CPI (Concepteur de Projets Informatiques)", company: "Formation en cours", desc: "Conception et développement d'applications complexes. Architecture logicielle et gestion de projet agile." },
               { year: "Sept 2023 - Juin 2025", title: "BTS SIO Option SLAM", company: "Diplôme Validé", desc: "Solutions Logicielles et Applications Métiers. Développement web, mobile et bases de données. Apprentissage des bonnes pratiques de code." },
             ].map((exp, i) => (
-              <div key={i} className="relative pl-8">
-                <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-slate-950"></div>
-                <div className="text-xs font-mono text-emerald-500 mb-1">{exp.year}</div>
-                <h3 className="text-lg font-bold text-white">{exp.title}</h3>
-                <div className="text-slate-500 text-sm mb-2">{exp.company}</div>
-                <p className="text-slate-400 text-sm leading-relaxed">{exp.desc}</p>
-              </div>
+              <Reveal key={i} delay={i * 0.1} width="100%">
+                <div className="relative pl-8">
+                  <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-slate-950"></div>
+                  <div className="text-xs font-mono text-emerald-500 mb-1">{exp.year}</div>
+                  <h3 className="text-lg font-bold text-white">{exp.title}</h3>
+                  <div className="text-slate-500 text-sm mb-2">{exp.company}</div>
+                  <p className="text-slate-400 text-sm leading-relaxed">{exp.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
