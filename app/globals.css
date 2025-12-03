@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f172a;
+  --background: #020617;
+  /* Slate 950 encore plus profond */
   --foreground: #e2e8f0;
 }
 
@@ -9,11 +10,35 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Empêche le scroll horizontal indésirable */
 }
 
-/* Ces lignes assurent que les bordures par défaut sont discrètes */
+/* --- LE FOND GRID --- */
+.bg-grid-white {
+  mask-image: linear-gradient(to bottom, transparent, 5%, white, 95%, transparent);
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* --- ANIMATION DEFILEMENT INFINI --- */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+/* Reset de base */
 *,
 ::before,
 ::after {

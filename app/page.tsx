@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Reveal } from "./components/Reveal";
+import { SpotlightCard } from "./components/SpotlightCard";
 import {
   Terminal, Code, Globe, Trash2, Plus, CheckCircle,
   Github, Linkedin, Mail, Server, Cpu, Layers, Send, Save, Loader2, X,
@@ -262,7 +263,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen selection:bg-emerald-500/30">
+    <main className="min-h-screen selection:bg-emerald-500/30 bg-grid-white">
       <ToastContainer notifications={notifications} removeToast={removeToast} />
       <CommandMenu />
 
@@ -349,30 +350,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stack & Services */}
-      <section className="py-20 border-y border-white/5 bg-slate-900/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Globe, title: "Frontend Moderne", desc: "Création d'interfaces réactives avec Next.js, React et Tailwind CSS. Performance et accessibilité avant tout." },
-              { icon: Server, title: "Backend Robuste", desc: "API REST & GraphQL scalables avec Node.js, Express ou NestJS. Gestion de bases de données PostgreSQL." },
-              { icon: Cpu, title: "Architecture & DevOps", desc: "Dockerisation, CI/CD et déploiement cloud (Vercel, AWS). Code propre et maintenable." },
-            ].map((item, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <div className="p-8 bg-slate-950/50 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition hover:-translate-y-1">
-                  <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-emerald-500 border border-emerald-500/10">
-                    <item.icon size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-slate-400 leading-relaxed text-sm">{item.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+      {/* Stack & Services (Infinite Marquee) */}
+      <section className="py-10 border-y border-white/5 bg-slate-900/50 overflow-hidden">
+        <div className="flex gap-16 animate-scroll w-max">
+          {[
+            { icon: Globe, label: "React" }, { icon: Server, label: "Node.js" }, { icon: Cpu, label: "Next.js" },
+            { icon: Layers, label: "TypeScript" }, { icon: Code, label: "Tailwind" }, { icon: Terminal, label: "Docker" },
+            { icon: Globe, label: "PostgreSQL" }, { icon: Server, label: "GraphQL" }, { icon: Cpu, label: "AWS" },
+            // Duplication pour l'effet infini
+            { icon: Globe, label: "React" }, { icon: Server, label: "Node.js" }, { icon: Cpu, label: "Next.js" },
+            { icon: Layers, label: "TypeScript" }, { icon: Code, label: "Tailwind" }, { icon: Terminal, label: "Docker" },
+          ].map((tech, i) => (
+            <div key={i} className="flex items-center gap-2 text-slate-400 font-mono text-lg font-bold opacity-70">
+              <tech.icon size={24} className="text-emerald-500" />
+              {tech.label}
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* NOUVELLE SECTION : REALISATIONS (MES PROJETS) */}
+      {/* NOUVELLE SECTION : REALISATIONS (AVEC SPOTLIGHT) */}
       <section id="realisations" className="py-24 bg-slate-950 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -381,10 +378,11 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
             {/* Projet 1 : Mama Pizza */}
             <Reveal>
-              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-                <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500">
+                <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
                   <Globe size={48} className="text-orange-500 opacity-80" />
                 </div>
                 <div className="p-8">
@@ -392,26 +390,25 @@ export default function Home() {
                     <div>
                       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mama Pizza Montlhéry</h3>
                       <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                        Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation pour le référencement local.
+                        Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation SEO.
                       </p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
                     <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
                     <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
-                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">UX/UI</span>
                   </div>
                   <a href="https://mamapizza-montlhery.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
                     Voir le site <ExternalLink size={16} />
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             </Reveal>
 
-            {/* Projet 2 : Autre projet */}
+            {/* Projet 2 : App Dashboard */}
             <Reveal delay={0.2}>
-              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-                <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(59, 130, 246, 0.25)"> {/* Lumière Bleue */}
+                <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
                   <Layers size={48} className="text-blue-500 opacity-80" />
                 </div>
                 <div className="p-8">
@@ -419,37 +416,25 @@ export default function Home() {
                     <div>
                       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Web & Dashboard</h3>
                       <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                        Prototype d'application web moderne démontrant l'intégration de composants dynamiques et une gestion d'état avancée.
+                        Prototype d'application web moderne démontrant l'intégration de composants dynamiques.
                       </p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
                     <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Next.js</span>
                     <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">TypeScript</span>
-                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
                   </div>
                   <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                    Voir l'application <ExternalLink size={16} />
+                    Voir l'app <ExternalLink size={16} />
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             </Reveal>
 
-            {/* Projet 3 : MamaAdmin Dashboard */}
+            {/* Projet 3 : MamaAdmin */}
             <Reveal delay={0.3}>
-              <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-                <div className="h-48 bg-slate-950 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-900 transition relative">
-                  {/* Simulation visuelle miniature du dashboard */}
-                  <div className="absolute inset-0 opacity-30 flex gap-2 p-4">
-                    <div className="w-1/4 h-full bg-slate-800 rounded"></div>
-                    <div className="w-3/4 h-full flex flex-col gap-2">
-                      <div className="h-8 bg-slate-800 rounded w-full"></div>
-                      <div className="flex gap-2 h-20">
-                        <div className="flex-1 bg-slate-800 rounded"></div>
-                        <div className="flex-1 bg-slate-800 rounded"></div>
-                      </div>
-                    </div>
-                  </div>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(168, 85, 247, 0.25)"> {/* Lumière Violette */}
+                <div className="h-48 bg-slate-950 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-900/80 transition relative">
                   <div className="z-10 bg-slate-900 p-3 rounded-xl border border-slate-700 shadow-xl">
                     <LayoutDashboard size={32} className="text-emerald-500" />
                   </div>
@@ -459,23 +444,20 @@ export default function Home() {
                     <div>
                       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">MamaAdmin Dashboard</h3>
                       <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                        Le Back-Office de gestion pour la pizzeria. Suivi des KPI, graphiques d'activité et gestion des commandes en temps réel.
+                        Le Back-Office de gestion pour la pizzeria. Suivi des KPI et gestion des commandes.
                       </p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Dashboard</span>
-                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Recharts</span>
                     <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Admin</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Recharts</span>
                   </div>
-                  {/* Note le lien interne vers /mama-admin */}
                   <a href="/mama-admin" target="_blank" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                    Tester le Dashboard <ArrowRight size={16} />
+                    Tester Dashboard <ArrowRight size={16} />
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             </Reveal>
-
 
           </div>
         </div>
