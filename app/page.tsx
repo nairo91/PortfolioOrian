@@ -554,7 +554,7 @@ export default function Home() {
           <div className="flex justify-center gap-6 mt-12">
             <a href="https://github.com" className="text-slate-500 hover:text-white transition"><Github size={24} /></a>
             <a href="https://www.linkedin.com/in/orian-mirona-85aa15235/" className="text-slate-500 hover:text-blue-500 transition"><Linkedin size={24} /></a>
-            <a href="mailto:orian@mirona.dev" className="text-slate-500 hover:text-emerald-500 transition"><Mail size={24} /></a>
+            <a href="mailto:orian.mirona@gmail.com" className="text-slate-500 hover:text-emerald-500 transition"><Mail size={24} /></a>
           </div>
           <p className="text-slate-600 text-xs mt-8">© 2025 MIRONA Orian - Fait avec Next.js & Tailwind</p>
         </div>
