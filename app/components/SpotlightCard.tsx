@@ -10,7 +10,8 @@ interface Props {
 export const SpotlightCard = ({
     children,
     className = "",
-    spotlightColor = "rgba(16, 185, 129, 0.25)" // Couleur Emerald par défaut
+    // J'ai augmenté l'opacité ici (0.45 au lieu de 0.25) pour plus de lumière
+    spotlightColor = "rgba(16, 185, 129, 0.45)"
 }: Props) => {
     const divRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -37,7 +38,10 @@ export const SpotlightCard = ({
             onMouseMove={handleMouseMove}
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur}
-            className={`relative rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden ${className}`}
+            // CHANGEMENT ICI : 
+            // 1. border-slate-700 (bordure plus claire)
+            // 2. bg-slate-800/50 (fond plus clair que le slate-900)
+            className={`relative rounded-2xl border border-slate-700 bg-slate-800/50 overflow-hidden ${className}`}
         >
             <div
                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
