@@ -459,9 +459,38 @@ export default function Home() {
               </SpotlightCard>
             </Reveal>
 
+            {/* Projet 4 : Mini Jeu Raffy */}
+            <Reveal delay={0.35}>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(236, 72, 153, 0.18)">
+                <div className="h-48 bg-gradient-to-br from-pink-600/20 to-rose-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
+                  <Globe size={48} className="text-pink-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mini Jeu Raffy</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Petit jeu arcade HTML5/JavaScript déployé sur Netlify. Gameplay simple et addictif, parfait pour un prototype interactif.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">HTML5</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">JavaScript</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Arcade</span>
+                  </div>
+                  <a href="https://minijeutraffy.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Jouer au mini-jeu <ExternalLink size={16} />
+                  </a>
+                </div>
+              </SpotlightCard>
+            </Reveal>
+
           </div>
         </div>
       </section>
+
+
 
       {/* Section Interactive APP */}
       <section id="demo" className="py-24 px-6 relative overflow-hidden bg-slate-900/30 border-y border-white/5">
