@@ -252,14 +252,42 @@ export default function Home() {
   };
 
   const [contactStatus, setContactStatus] = useState<'idle' | 'loading' | 'success'>('idle');
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setContactStatus('loading');
-    setTimeout(() => {
-      setContactStatus('success');
-      addToast("Message envoyé à Orian !", 'success');
-      setTimeout(() => setContactStatus('idle'), 3000);
-    }, 1500);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    // REMPLACEZ 'VOTRE_ID_FORMSPREE' PAR L'ID OBTENU SUR FORMSPREE.IO
+    // Exemple: 'xdoqzkaz'
+    const FORMSPREE_ID = 'xovgljlj';
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setContactStatus('success');
+        addToast("Message envoyé à Orian !", 'success');
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error('Erreur lors de l\'envoi');
+      }
+    } catch (error) {
+      console.error(error);
+      addToast("Erreur lors de l'envoi. Réessayez.", 'info');
+      setContactStatus('idle');
+    } finally {
+      if (contactStatus === 'success') {
+        setTimeout(() => setContactStatus('idle'), 3000);
+      }
+    }
   };
 
   return (
@@ -536,11 +564,11 @@ export default function Home() {
           <form onSubmit={handleContactSubmit} className="space-y-4 text-left bg-slate-900/50 p-6 rounded-2xl border border-white/5">
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">Votre Email</label>
-              <input required type="email" placeholder="contact@exemple.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition" />
+              <input required name="email" type="email" placeholder="contact@exemple.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">Votre Message</label>
-              <textarea required rows={4} placeholder="Bonjour Orian, j'ai un projet..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition"></textarea>
+              <textarea required name="message" rows={4} placeholder="Bonjour Orian, j'ai un projet..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition"></textarea>
             </div>
             <button
               type="submit"
