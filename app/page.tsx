@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { Reveal } from "./components/Reveal";
+import { SpotlightCard } from "./components/SpotlightCard";
 import {
   Terminal, Code, Globe, Trash2, Plus, CheckCircle,
   Github, Linkedin, Mail, Server, Cpu, Layers, Send, Save, Loader2, X,
-  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop, Calendar
+  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop, Calendar, LayoutDashboard
 } from 'lucide-react';
 
 // --- TYPES ---
@@ -250,18 +252,46 @@ export default function Home() {
   };
 
   const [contactStatus, setContactStatus] = useState<'idle' | 'loading' | 'success'>('idle');
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setContactStatus('loading');
-    setTimeout(() => {
-      setContactStatus('success');
-      addToast("Message envoyé à Orian !", 'success');
-      setTimeout(() => setContactStatus('idle'), 3000);
-    }, 1500);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    // REMPLACEZ 'VOTRE_ID_FORMSPREE' PAR L'ID OBTENU SUR FORMSPREE.IO
+    // Exemple: 'xdoqzkaz'
+    const FORMSPREE_ID = 'xovgljlj';
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setContactStatus('success');
+        addToast("Message envoyé à Orian !", 'success');
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error('Erreur lors de l\'envoi');
+      }
+    } catch (error) {
+      console.error(error);
+      addToast("Erreur lors de l'envoi. Réessayez.", 'info');
+      setContactStatus('idle');
+    } finally {
+      if (contactStatus === 'success') {
+        setTimeout(() => setContactStatus('idle'), 3000);
+      }
+    }
   };
 
   return (
-    <main className="min-h-screen selection:bg-emerald-500/30">
+    <main className="min-h-screen selection:bg-emerald-500/30 bg-grid-white">
       <ToastContainer notifications={notifications} removeToast={removeToast} />
       <CommandMenu />
 
@@ -291,75 +321,83 @@ export default function Home() {
       <section id="about" className="pt-40 pb-20 px-6 max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              Disponible pour missions Fullstack
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
-              Salut, je suis <br />
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">MIRONA Orian</span>
-            </h1>
-            <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
-              Développeur Fullstack passionné par l'architecture logicielle et l'expérience utilisateur.
-              Je transforme des idées complexes en applications web fluides et performantes.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a href="#realisations" className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-emerald-900/20 flex items-center gap-2">
-                Voir mes projets <Code size={18} />
-              </a>
-              <a href="https://github.com" target="_blank" className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold transition border border-slate-700 flex items-center gap-2">
-                <Github size={18} /> GitHub
-              </a>
-            </div>
+            <Reveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Disponible pour missions Fullstack
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
+                Salut, je suis <br />
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">MIRONA Orian</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
+                Développeur Fullstack passionné par l'architecture logicielle et l'expérience utilisateur.
+                Je transforme des idées complexes en applications web fluides et performantes.
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a href="#realisations" className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-emerald-900/20 flex items-center gap-2">
+                  Voir mes projets <Code size={18} />
+                </a>
+                <a href="https://github.com" target="_blank" className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold transition border border-slate-700 flex items-center gap-2">
+                  <Github size={18} /> GitHub
+                </a>
+              </div>
+            </Reveal>
           </div>
 
           {/* Bloc Visuel "Code" */}
           <div className="flex-1 w-full max-w-md">
-            <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 shadow-2xl rotate-3 hover:rotate-0 transition duration-500">
-              <div className="flex gap-1.5 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <div className="space-y-2 font-mono text-sm">
-                <div className="text-slate-400">// Définition du profil</div>
-                <div className="text-purple-400">const <span className="text-blue-400">developer</span> = <span className="text-yellow-300">{'{'}</span></div>
-                <div className="pl-4 text-white">name: <span className="text-emerald-400">'MIRONA Orian'</span>,</div>
-                <div className="pl-4 text-white">role: <span className="text-emerald-400">'Fullstack Engineer'</span>,</div>
-                <div className="pl-4 text-white">skills: <span className="text-yellow-300">['React', 'Node', 'SQL']</span>,</div>
-                <div className="pl-4 text-white">hardWorker: <span className="text-orange-400">true</span></div>
-                <div className="text-yellow-300">{'}'}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stack & Services */}
-      <section className="py-20 border-y border-white/5 bg-slate-900/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Globe, title: "Frontend Moderne", desc: "Création d'interfaces réactives avec Next.js, React et Tailwind CSS. Performance et accessibilité avant tout." },
-              { icon: Server, title: "Backend Robuste", desc: "API REST & GraphQL scalables avec Node.js, Express ou NestJS. Gestion de bases de données PostgreSQL." },
-              { icon: Cpu, title: "Architecture & DevOps", desc: "Dockerisation, CI/CD et déploiement cloud (Vercel, AWS). Code propre et maintenable." },
-            ].map((item, i) => (
-              <div key={i} className="p-8 bg-slate-950/50 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition hover:-translate-y-1">
-                <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-emerald-500 border border-emerald-500/10">
-                  <item.icon size={24} />
+            <Reveal delay={0.4}>
+              <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 shadow-2xl rotate-3 hover:rotate-0 transition duration-500">
+                <div className="flex gap-1.5 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-slate-400 leading-relaxed text-sm">{item.desc}</p>
+                <div className="space-y-2 font-mono text-sm">
+                  <div className="text-slate-400">// Définition du profil</div>
+                  <div className="text-purple-400">const <span className="text-blue-400">developer</span> = <span className="text-yellow-300">{'{'}</span></div>
+                  <div className="pl-4 text-white">name: <span className="text-emerald-400">'MIRONA Orian'</span>,</div>
+                  <div className="pl-4 text-white">role: <span className="text-emerald-400">'Fullstack Engineer'</span>,</div>
+                  <div className="pl-4 text-white">skills: <span className="text-yellow-300">['React', 'Node', 'SQL']</span>,</div>
+                  <div className="pl-4 text-white">hardWorker: <span className="text-orange-400">true</span></div>
+                  <div className="text-yellow-300">{'}'}</div>
+                </div>
               </div>
-            ))}
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* NOUVELLE SECTION : REALISATIONS (MES PROJETS) */}
+      {/* Stack & Services (Infinite Marquee) */}
+      <section className="py-10 border-y border-white/5 bg-slate-900/50 overflow-hidden">
+        <div className="flex gap-16 animate-scroll w-max">
+          {[
+            { icon: Globe, label: "React" }, { icon: Server, label: "Node.js" }, { icon: Cpu, label: "Next.js" },
+            { icon: Layers, label: "TypeScript" }, { icon: Code, label: "Tailwind" }, { icon: Terminal, label: "Docker" },
+            { icon: Globe, label: "PostgreSQL" }, { icon: Server, label: "GraphQL" }, { icon: Cpu, label: "AWS" },
+            // Duplication pour l'effet infini
+            { icon: Globe, label: "React" }, { icon: Server, label: "Node.js" }, { icon: Cpu, label: "Next.js" },
+            { icon: Layers, label: "TypeScript" }, { icon: Code, label: "Tailwind" }, { icon: Terminal, label: "Docker" },
+          ].map((tech, i) => (
+            <div key={i} className="flex items-center gap-2 text-slate-400 font-mono text-lg font-bold opacity-70">
+              <tech.icon size={24} className="text-emerald-500" />
+              {tech.label}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* NOUVELLE SECTION : REALISATIONS (AVEC SPOTLIGHT) */}
       <section id="realisations" className="py-24 bg-slate-950 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -368,83 +406,145 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
             {/* Projet 1 : Mama Pizza */}
-            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-              <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
-                <Globe size={48} className="text-orange-500 opacity-80" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mama Pizza Montlhéry</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                      Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation pour le référencement local.
-                    </p>
+            <Reveal>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500">
+                <div className="h-48 bg-gradient-to-br from-orange-600/20 to-red-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
+                  <Globe size={48} className="text-orange-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mama Pizza Montlhéry</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Site vitrine complet pour une pizzeria locale. Mise en avant du menu, design responsive et optimisation SEO.
+                      </p>
+                    </div>
                   </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
+                  </div>
+                  <a href="https://mamapizza-montlhery.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Voir le site <ExternalLink size={16} />
+                  </a>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">UX/UI</span>
-                </div>
-                <a href="https://mamapizza-montlhery.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                  Voir le site <ExternalLink size={16} />
-                </a>
-              </div>
-            </div>
+              </SpotlightCard>
+            </Reveal>
 
-            {/* Projet 2 : Autre projet */}
-            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-              <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
-                <Layers size={48} className="text-blue-500 opacity-80" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Web & Dashboard</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                      Prototype d'application web moderne démontrant l'intégration de composants dynamiques et une gestion d'état avancée.
-                    </p>
+            {/* Projet 2 : App Dashboard */}
+            <Reveal delay={0.2}>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(59, 130, 246, 0.25)"> {/* Lumière Bleue */}
+                <div className="h-48 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
+                  <Layers size={48} className="text-blue-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Web & Dashboard</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Prototype d'application web moderne démontrant l'intégration de composants dynamiques.
+                      </p>
+                    </div>
                   </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Next.js</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">TypeScript</span>
+                  </div>
+                  <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Voir l'app <ExternalLink size={16} />
+                  </a>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Next.js</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">TypeScript</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
-                </div>
-                <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                  Voir l'application <ExternalLink size={16} />
-                </a>
-              </div>
-            </div>
+              </SpotlightCard>
+            </Reveal>
 
-            {/* Projet 3 : Rendez-vous Ostéo */}
-            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
-              <div className="h-48 bg-gradient-to-br from-teal-600/20 to-emerald-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
-                <Calendar size={48} className="text-teal-500 opacity-80" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Rendez-vous Ostéo</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                      Application de prise de rendez-vous avec vues client et administrateur. Gestion des créneaux et interface intuitive.
-                    </p>
+            {/* Projet 3 : MamaAdmin */}
+            <Reveal delay={0.3}>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(168, 85, 247, 0.25)"> {/* Lumière Violette */}
+                <div className="h-48 bg-slate-950 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-900/80 transition relative">
+                  <div className="z-10 bg-slate-900 p-3 rounded-xl border border-slate-700 shadow-xl">
+                    <LayoutDashboard size={32} className="text-emerald-500" />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
-                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">MamaAdmin Dashboard</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Le Back-Office de gestion pour la pizzeria. Suivi des KPI et gestion des commandes.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Admin</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Recharts</span>
+                  </div>
+                  <a href="/mama-admin" target="_blank" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Tester Dashboard <ArrowRight size={16} />
+                  </a>
                 </div>
-                <a href="https://wonderful-cajeta-8b94ec.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
-                  Voir l'application <ExternalLink size={16} />
-                </a>
-              </div>
-            </div>
+              </SpotlightCard>
+            </Reveal>
+
+            {/* Projet 4 : Rendez-vous Ostéo */}
+            <Reveal delay={0.35}>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(20, 184, 166, 0.25)">
+                <div className="h-48 bg-gradient-to-br from-teal-600/20 to-emerald-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
+                  <Calendar size={48} className="text-teal-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Rendez-vous Ostéo</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Application de prise de rendez-vous avec vues client et administrateur. Gestion des créneaux et interface intuitive.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
+                  </div>
+                  <a href="https://wonderful-cajeta-8b94ec.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Voir l'application <ExternalLink size={16} />
+                  </a>
+                </div>
+              </SpotlightCard>
+            </Reveal>
+
+            {/* Projet 5 : Mini Jeu Raffy */}
+            <Reveal delay={0.4}>
+              <SpotlightCard className="group hover:border-emerald-500/50 transition duration-500" spotlightColor="rgba(236, 72, 153, 0.18)">
+                <div className="h-48 bg-gradient-to-br from-pink-600/20 to-rose-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800/80 transition">
+                  <Globe size={48} className="text-pink-500 opacity-80" />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Mini Jeu Raffy</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        Petit jeu arcade HTML5/JavaScript déployé sur Netlify. Gameplay simple et addictif, parfait pour un prototype interactif.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">HTML5</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">JavaScript</span>
+                    <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Arcade</span>
+                  </div>
+                  <a href="https://minijeutraffy.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                    Jouer au mini-jeu <ExternalLink size={16} />
+                  </a>
+                </div>
+              </SpotlightCard>
+            </Reveal>
           </div>
         </div>
       </section>
+
+
 
       {/* Section Interactive APP */}
       <section id="demo" className="py-24 px-6 relative overflow-hidden bg-slate-900/30 border-y border-white/5">
@@ -467,13 +567,15 @@ export default function Home() {
               { year: "Sept 2025 - Présent", title: "Licence CPI (Concepteur de Projets Informatiques)", company: "Formation en cours", desc: "Conception et développement d'applications complexes. Architecture logicielle et gestion de projet agile." },
               { year: "Sept 2023 - Juin 2025", title: "BTS SIO Option SLAM", company: "Diplôme Validé", desc: "Solutions Logicielles et Applications Métiers. Développement web, mobile et bases de données. Apprentissage des bonnes pratiques de code." },
             ].map((exp, i) => (
-              <div key={i} className="relative pl-8">
-                <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-slate-950"></div>
-                <div className="text-xs font-mono text-emerald-500 mb-1">{exp.year}</div>
-                <h3 className="text-lg font-bold text-white">{exp.title}</h3>
-                <div className="text-slate-500 text-sm mb-2">{exp.company}</div>
-                <p className="text-slate-400 text-sm leading-relaxed">{exp.desc}</p>
-              </div>
+              <Reveal key={i} delay={i * 0.1} width="100%">
+                <div className="relative pl-8">
+                  <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-slate-950"></div>
+                  <div className="text-xs font-mono text-emerald-500 mb-1">{exp.year}</div>
+                  <h3 className="text-lg font-bold text-white">{exp.title}</h3>
+                  <div className="text-slate-500 text-sm mb-2">{exp.company}</div>
+                  <p className="text-slate-400 text-sm leading-relaxed">{exp.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -488,11 +590,11 @@ export default function Home() {
           <form onSubmit={handleContactSubmit} className="space-y-4 text-left bg-slate-900/50 p-6 rounded-2xl border border-white/5">
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">Votre Email</label>
-              <input required type="email" placeholder="contact@exemple.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition" />
+              <input required name="email" type="email" placeholder="contact@exemple.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">Votre Message</label>
-              <textarea required rows={4} placeholder="Bonjour Orian, j'ai un projet..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition"></textarea>
+              <textarea required name="message" rows={4} placeholder="Bonjour Orian, j'ai un projet..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none transition"></textarea>
             </div>
             <button
               type="submit"
@@ -506,7 +608,7 @@ export default function Home() {
           <div className="flex justify-center gap-6 mt-12">
             <a href="https://github.com" className="text-slate-500 hover:text-white transition"><Github size={24} /></a>
             <a href="https://www.linkedin.com/in/orian-mirona-85aa15235/" className="text-slate-500 hover:text-blue-500 transition"><Linkedin size={24} /></a>
-            <a href="mailto:orian@mirona.dev" className="text-slate-500 hover:text-emerald-500 transition"><Mail size={24} /></a>
+            <a href="mailto:orian.mirona@gmail.com" className="text-slate-500 hover:text-emerald-500 transition"><Mail size={24} /></a>
           </div>
           <p className="text-slate-600 text-xs mt-8">© 2025 MIRONA Orian - Fait avec Next.js & Tailwind</p>
         </div>
