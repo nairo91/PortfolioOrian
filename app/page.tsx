@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Terminal, Code, Globe, Trash2, Plus, CheckCircle,
   Github, Linkedin, Mail, Server, Cpu, Layers, Send, Save, Loader2, X,
-  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop
+  ExternalLink, ArrowRight, Search, Command, Moon, Sun, Laptop, Calendar
 } from 'lucide-react';
 
 // --- TYPES ---
@@ -413,6 +413,31 @@ export default function Home() {
                   <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
                 </div>
                 <a href="https://fabulous-faloodeh-4e5cb3.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
+                  Voir l'application <ExternalLink size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* Projet 3 : Rendez-vous Ostéo */}
+            <div className="group relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition duration-300">
+              <div className="h-48 bg-gradient-to-br from-teal-600/20 to-emerald-600/20 flex items-center justify-center border-b border-slate-800 group-hover:bg-slate-800 transition">
+                <Calendar size={48} className="text-teal-500 opacity-80" />
+              </div>
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition">Application Rendez-vous Ostéo</h3>
+                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                      Application de prise de rendez-vous avec vues client et administrateur. Gestion des créneaux et interface intuitive.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">React</span>
+                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Tailwind</span>
+                  <span className="px-3 py-1 bg-slate-950 rounded-full text-xs font-medium text-slate-300 border border-slate-800">Netlify</span>
+                </div>
+                <a href="https://wonderful-cajeta-8b94ec.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-emerald-400 font-medium hover:text-emerald-300 transition group-hover:translate-x-1">
                   Voir l'application <ExternalLink size={16} />
                 </a>
               </div>
